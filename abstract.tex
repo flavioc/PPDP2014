@@ -1,0 +1,12 @@
+
+We have developed a virtual machine for Linear Meld, a forward-chaining linear logic programming language
+where programs can be executed in parallel. In Linear Meld, a program is seen as a database of logical facts and a set of derivation rules.
+The database of facts is partitioned by the nodes of a graph structure which leads
+to parallelism when nodes are executed simultaneously.
+Due to the foundations on linear logic, rules can retract facts in a declarative and structured fashion, leading
+to more expressive programs.
+We present the design and implementation of the virtual machine that executes on multicores,
+with a focus on thread management, code organization, fact indexing, rule execution, and database organization for efficient fact insertion,
+lookup and deletion. Our results show that the virtual machine is not only
+capable of scaling programs with up to 16 threads but also exhibits interesting performance results when
+compared against other programming languages.

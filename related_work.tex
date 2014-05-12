@@ -1,0 +1,19 @@
+Virtual machines are a popular technique for implementing interpreters for high level programming languages.
+Due to the increased availability of parallel machines and distributed architectures, several machine
+models have been developed with parallelism in mind~\cite{Kara:1997:AMM:265274}.
+One example of such machine is the Parallel Virtual Machine (PVM)~\cite{Sunderam90pvm:a}, which serves as an abstraction
+to program heterogeneous computers as a single machine. Another important machine is the Threaded Abstract Machine (TAM)~\cite{CullerGSvE93,goldstein-tr94},
+which defines a self-scheduled machine language of parallel threads where a program is represented as conventional control flow.
+
+Prolog, the most prominent logic programming language, has a rich history of virtual machine research centered
+around the Warren Abstract Machine WAM~\cite{AICPub641:1983}. The WAM offers special purpose instructions, including
+unification instructions for different kinds of data and control flow instructions to implement backtracking.
+The WAM is fully sequential and uses four memory areas: heap, stack, trail and the push down list.
+Much research has been done to improve the speed and efficiency of the original WAM design~\cite{Costa07demand-drivenindexing,167005,Turk-Logic:1986fk}.
+
+Prolog is naturally parallel because several clauses for the same goal (AND-parallelism) or all goals in a clause (OR-parallelism) can be tried
+in parallel. Different abstract machines for AND-parallelism has been developed on top of the WAM~\cite{Hermenegildo:1986:AMB:913061,Lin:1988:AEL:900478}.
+For OR-parallelism we have several models such as: the SRI model~\cite{Warren:1987:OEM:67683.67699},
+the Argonne model~\cite{ButlerDLOOS88}, the MUSE model~\cite{Ali:1990fk} and the BC machine~\cite{Ali88}. While all those models have been
+developed using the WAM, there are some parallel machines totally different from the WAM such as the PPAM~\cite{Kacsuk:1990:EMP:533578},
+which is based on a data-flow model.
