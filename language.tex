@@ -84,14 +84,13 @@ filled with the program's axioms. Next, we follow the right branch using rule 3 
 We then use the same rule again in Fig.~\ref{fig:btree_trace}c where we finally reach the key 6. Here, we apply rule 1 and
 \texttt{value(@6, 6, 6)} is updated to \texttt{value(@6, 6, 7)}.
 
-\begin{figure*}[]
+\begin{figure*}[ht]
         \centering
         \begin{subfigure}[b]{0.45\textwidth}
                 \includegraphics[width=\textwidth]{btree_trace1}
                 \caption{Initial database. Replace axiom instantiated at root node $@3$.}
                 \label{fig:btree_trace1}
         \end{subfigure}%
-        ~
         \begin{subfigure}[b]{0.45\textwidth}
                 \includegraphics[width=\textwidth]{btree_trace2}
                 \caption{After applying rule 3 at node $@3$. Replace fact sent to node $@5$.}
@@ -102,7 +101,6 @@ We then use the same rule again in Fig.~\ref{fig:btree_trace}c where we finally 
                 \caption{After applying rule 3 at node $@5$. Replace fact reaches node $@6$.}
                 \label{fig:btree_trace3}
         \end{subfigure}%
-        ~
         \begin{subfigure}[b]{0.45\textwidth}
                   \includegraphics[width=\textwidth]{btree_trace4}
                   \caption{After applying rule 1 at node $@6$. Value of key 6 has changed to 7.}
