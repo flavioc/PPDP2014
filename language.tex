@@ -231,7 +231,14 @@ By applying the rule, we consume \texttt{count-prices(@1)} and derive
 the aggregate which consumes all the \texttt{price(@1, P)} linear
 facts. These are summed up and \texttt{total(@1,~12)} is derived. LM
 provides several aggregate operations, including the \emph{minimum},
-\emph{maximum}, \emph{sum} and \emph{count}.
+\emph{maximum}, \emph{sum} and \emph{count}. Note that the \texttt{.} syntax indicates
+an empty list of variables and \texttt{1} is borrowed from linear logic
+and represents an empty derivation.
+
+Comprehensions and aggregates are logically justified by the underlying
+proof system of the language. Our proof system is extended with greatest
+fixed points~\cite{Baelde:2012:LGF:2071368.2071370}, which allows us to describe
+recursive definitions such as comprehensions or aggregates.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -254,4 +261,6 @@ facts to fire a derivation rule.  Facts coming from other nodes will
 arrive in order of derivation but may be considered partially and
 there is no particular order among the neighborhood. To improve
 concurrency, the programmer is encouraged to write rules that take
-advantage of the non-deterministic nature of execution.
+advantage of the non-deterministic nature of execution since too much
+determinism will naturally imply less scalability and more synchronization
+when executing the programs.

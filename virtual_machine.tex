@@ -16,10 +16,10 @@ partition the application graph of $N$ nodes into $T$ subgraphs (the
 number of threads) and then each thread will work on their own
 subgraph. Reduction of communication between nodes in different threads
 is achieved by first ordering the node addresses present in the code in such a way that
-closer nodes are clustered together and then partitioning them to
+connected nodes are clustered together and then partitioning them to
 threads. During compilation, we take note of predicates that are used
-in rules with communication (arguments with type \emph{node}) and
-then build a graph of nodes from the program's axioms. The nodes of
+for communication (arguments with type \emph{node}) and
+then build a graph of nodes from them. The nodes of
 the graph are then ordered by using a breadth-first search algorithm
 that changes the nodes of addresses to the domain $[0, n[$, where $n$
 is the number of nodes. Once the VM starts, we simply partition the
@@ -109,7 +109,7 @@ required updates (\emph{New fact (1)}). If the flag is activated, it
 will not touch the main node data structures, but instead will add the
 new fact to \emph{Fact Buffer} (\emph{New fact (2)}). The facts stored
 in \emph{Fact Buffer} will then be processed whenever the
-corresponding node is about to be executed.
+corresponding node's flag becomes active.
 
 There is another thread interaction that might happen during fact
 derivation if the node receiving a new fact is not active. In such
@@ -382,7 +382,7 @@ Entropy(A, F) = - \sum_{v \in values(F, A)} \frac{count(F, A = v)}{total(F)} \lo
 \]
 }
 
-Where $A$ is the target argument, $F$ is the multi-set of linear facts
+Where $A$ is the target argument, $F$ is the set of linear facts
 for the target predicate, $values(F, A)$ is set of values of the
 argument $A$, $count(F, A = v)$ counts the number of linear facts
 where argument $A$ is equal to $v$ and $total(F)$ counts the number of

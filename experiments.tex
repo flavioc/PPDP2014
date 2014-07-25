@@ -59,8 +59,8 @@ program, a machine learning algorithm to denoise images, against a
 sequential C, Python and GraphLab~\cite{GraphLab2010} version of the
 algorithm. GraphLab is a parallel C++ library used to solve
 graph-based problems in machine learning. C and GraphLab perform about
-the same since they are both compiled to machine code. The GraphLab version
-is highly optimized to run on multicore architectures.
+the same since they are both compiled to machine code, although
+the GraphLab version is highly optimized to run on multicore architectures.
 Python runs very slowly since it is a
 dynamic programming language and BP has many mathematical
 computations. We should note, however, that LM's version uses some
@@ -73,7 +73,7 @@ therefore the comparison is not totally fair.
 \textbf{Problem} & \multicolumn{3}{c}{\textbf{System}} \\
 \textbf{Size} & \textbf{C} & \textbf{Python} & \textbf{GraphLab} \\
 \hline\hline
-\textbf{10}  & 0.67 & 0.03 & 1.00 \\
+\textbf{10}  & 1.00 & 0.03 & 1.00 \\
 \textbf{50}  & 1.77 & 0.04 & 1.73 \\
 \textbf{200} & 1.99 & 0.05 & 1.79 \\
 \textbf{400} & 2.00 & 0.04 & 1.80 \\
