@@ -14,8 +14,8 @@ and to reduce inter-thread communication. When the VM starts, it reads
 the byte-code file and starts all threads. Initially, the VM will
 partition the application graph of $N$ nodes into $T$ subgraphs (the
 number of threads) and then each thread will work on their own
-subgraph. Reduction of inter-thread communication is achieved by first
-ordering the node addresses present in the code in such a way that
+subgraph. Reduction of communication between nodes in different threads
+is achieved by first ordering the node addresses present in the code in such a way that
 closer nodes are clustered together and then partitioning them to
 threads. During compilation, we take note of predicates that are used
 in rules with communication (arguments with type \emph{node}) and
@@ -91,7 +91,7 @@ axioms. Figure~\ref{fig:overview} also illustrates the internal
 structure layout of a node, which includes: the database of linear
 facts (\emph{Linear DB}); the database of persistent facts
 (\emph{Persistent DB}); the rule matching structures (\emph{Rule
-Engine}); and a auxiliary buffer for storing intermediate facts
+Engine}); and an auxiliary buffer for storing intermediate facts
 coming from other threads (\emph{Fact Buffer}).
 
 Whenever a new fact is derived through rule derivation, we need to
@@ -195,11 +195,11 @@ following set of rules and facts:
 {\footnotesize
 \begin{Verbatim}
 // rules
-a, e(1) -o b.
-a -o c.
-b -o d.
-e(0) -o f.
-c -o e(1).
+1: a, e(1) -o b.
+2: a -o c.
+3: b -o d.
+4: e(0) -o f.
+5: c -o e(1).
 
 // facts
 a.
@@ -241,9 +241,8 @@ the rule engine data structures at that point.
 
 Note that every node in the program has the same set of data
 structures presented in Fig.~\ref{fig:rule_engine}. We use 32 bits
-integers to implement bitmaps and an array of 16 bits integers to
-count facts, resulting in $32 + 2P$ bytes per node, where $P$ is the
-number of predicates.
+integers to implement the 3 bitmaps and an array of 16 bits integers to
+count facts.
 
 We do a small optimization to reduce the number of derivations of
 persistent facts and, for that, we divide the program rules into two
@@ -425,3 +424,8 @@ next element of the list; \texttt{head}, the element stored by this
 element of the list; and \texttt{refs} that counts the number of
 pointers to this list element in the VM. The list is deleted from the
 heap whenever \texttt{refs} is decremented to 0.
+
+We avoid garbage collection schemes since objects are created and discarded
+in very specific points of the virtual machine and our objects cannot contain circular references.
+A reference counting mechanism is thus more appropriate than a parallel garbage collector which
+would entail pausing the execution of the program to garbage collect all the unused objects.
