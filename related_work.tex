@@ -36,3 +36,11 @@ using the WAM, there are also some parallel machines totally different
 from the WAM, such as the PPAM~\cite{Kacsuk:1990:EMP:533578}, which is
 based on a data-flow model.
 
+Several linear logic programming languages have been developed in the past~\cite{Miller85anoverview}.
+Lolli, a programming language based on a fragment of intuitionistic linear logic~\cite{Hodas94logicprogramming}, 
+proves goals by lazily managing the context of linear resources during backward-chaining proof search.
+LolliMon~\cite{Lopez:2005:MCL:1069774.1069778} is a concurrent linear logic programming language that integrates
+both forward and backward-chaining search, where the backward-chaining phase is done sequentially but
+the forward-chaining is done concurrently inside a monad. The backward-chaining phase is suspended
+between the forward-chaining phases, where a fix-point is computed.
+LolliMon is derived from the concurrent logical framework called CLF~\cite{Watkins:2004uq}.
