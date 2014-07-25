@@ -1,78 +1,58 @@
-% This is LLNCS.DEM the demonstration file of
-% the LaTeX macro package from Springer-Verlag
-% for Lecture Notes in Computer Science,
-% version 2.4 for LaTeX2e as of 16. April 2010
-%
 \documentclass{acm_proc_article-sp}
-%
-\usepackage{makeidx}  % allows for indexgeneration
-\usepackage{fancyvrb}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage[utf8]{inputenc}
+\usepackage{epsfig}
+\usepackage{multicol}
+\usepackage{multirow}
 \usepackage{wrapfig}
-\usepackage{nth}
-\usepackage[backref,pageanchor=true,plainpages=false, pdfpagelabels, bookmarks,bookmarksnumbered]{hyperref}
+\usepackage{subfigure}
+\usepackage{fancyvrb}
+\usepackage{url}
+\usepackage{balance}
+\usepackage{listings}
+\usepackage{multicol}
+\lstset{language=C, basicstyle=\ttfamily, breaklines=true, frame=lines}
 \input{fp-macros}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}
-\newcommand{\cmu}{\ensuremath{^\dag}}
-\newcommand{\fcup}{\ensuremath{^\ddag}}
-  \makeatletter
-    \let\@copyrightspace\relax
-      \makeatother
-\numberofauthors{3} %  in this sample file, there are a *total*
 
-\title{Design and implementation of a multithreaded virtual machine for executing linear logic programs}
+\title{Design and Implementation of a Multithreaded Virtual Machine for Executing Linear Logic Programs}
 
+\numberofauthors{3}
 \author{
-\alignauthor
-   Flavio Cruz \\
-\affaddr{Carnegie Mellon University, Pittsburgh, PA 15213, USA}\\
-\email{fmfernan@cs.cmu.edu} \\
-\alignauthor Ricardo Rocha \\
-\affaddr{CRACS \& INESC TEC, Faculty of Sciences, University Of Porto} \\
-\affaddr{Rua do Campo Alegre, 1021/1055, 4169-007 Porto, Portugal} \\
-\email{ricroc@dcc.fc.up.pt} \\
-\alignauthor Seth Copen Goldstein \\
-\affaddr{Carnegie Mellon University, Pittsburgh, PA 15213, USA}\\
-\email{seth@cs.cmu.edu} \\
+  \alignauthor Flavio Cruz \\
+    \affaddr{Carnegie Mellon University}
+    \affaddr{Pittsburgh, PA 15213, USA}\\
+    \email{fmfernan@cs.cmu.edu} \\
+  \alignauthor Ricardo Rocha \\
+    \affaddr{CRACS \& INESC TEC}\\
+    \affaddr{University of Porto}\\
+    \affaddr{Rua Campo Alegre 1021/1055}\\
+    \affaddr{4169-007 Porto, Portugal}\\
+    \email{ricroc@dcc.fc.up.pt}
+  \alignauthor Seth Copen Goldstein \\
+    \affaddr{Carnegie Mellon University}
+    \affaddr{Pittsburgh, PA 15213, USA}\\
+    \email{seth@cs.cmu.edu} \\
 }
 
-%\institute{Carnegie Mellon University, Pittsburgh, PA 15213, USA\\
-%\email{\{fmfernan, seth\}@cs.cmu.edu}
-%\and
-%CRACS \& INESC TEC, Faculty of Sciences, University Of Porto\\
-%Rua do Campo Alegre, 1021/1055, 4169-007 Porto, Portugal\\
-%\email{\{flavioc, ricroc\}@dcc.fc.up.pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\maketitle              % typeset the title of the contribution
+\maketitle
 
-\begin{abstract}
 \input{abstract}
-\keywords{linear logic programming, virtual machine, implementation}
-\end{abstract}
-
-\section{Introduction}
 \input{introduction}
-
-\section{The LM Language}\label{lm_language}
 \input{language}
-
-\section{The Virtual Machine}\label{virtual_machine}
 \input{virtual_machine}
-
-\section{Experimental Results}\label{results}
-\input{preliminary_results}
-
-\section{Related Work}\label{related_work}
+\input{experiments}
 \input{related_work}
-
-\section{Conclusions}
 \input{conclusions}
+
+\balance
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \bibliographystyle{abbrv}
 \bibliography{refs}
 \end{document}
-

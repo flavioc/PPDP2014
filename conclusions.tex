@@ -1,12 +1,30 @@
-We have presented a parallel virtual machine for executing forward-chaining linear logic programs, with particular focus
-on parallel scheduling on multicores, rule execution and database organization for fast insertion,
-lookup, and deletion of linear facts.
-Our experimental results show that the VM is able to scale the execution of programs when run with up to 16 threads.
-Although this is still a work in progress, the VM also fairs well against other programming languages.
-Moreover, since LM programs are concurrent by default, we can easily get better performance from the start by executing
-them with multiple threads.
+\section{Conclusions}
 
-In the future, we intend to take advantage of linear logic to perform whole-program optimizations,
-including computing program invariants, loop detection in rules and bypass of rule priorities. For instance,
-we want to detect during compile time which might be the best data structure for each predicate depending in how it
-is used in the rules.
+We have presented a parallel virtual machine for executing
+forward-chaining linear logic programs, with particular focus on
+thread management, code organization, fact indexing, rule execution
+and database organization for fast insertion, lookup, and deletion of
+linear facts. Experimental results show that our VM is able to scale
+the execution of programs when run with up to 16 threads.
+Our results also show the importance of having an efficient indexing mechanisms
+for facts. With our dynamic indexing, the VM automatically detects which predicates
+need to be indexed in order to improve performance.
+Due to these and other optimizations, the VM fairs relatively well against other programming languages, including
+compiled languages. Moreover, since LM programs are
+concurrent by default, we can easily get better performance from the
+start by executing them with multiple threads.
+As further work, we want to improve parallel scalability and
+take advantage of linear logic to perform whole-program
+optimizations, including computing program invariants, loop detection
+in rules and bypass of rule priorities.
+
+We think that our virtual machine is an excellent starting point to make
+logic programming more desirable in the data-mining, machine learning and
+distributed/parallel programming community. Moreover, our virtual machine can
+be easily extended to execute over computer networks or to execute programs on really big datasets.
+In a nutshell, LM provides a concise way to describe
+graph-based algorithms that can be more easily reasoned about, a clear advantage over
+competing systems.
+%% For instance, we want to detect during compile time which might be the
+%% best data structure for each predicate depending in how it is used in
+%% the rules.

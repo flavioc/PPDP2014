@@ -1,12 +1,25 @@
+\begin{abstract}
+Linear Meld is a concurrent forward-chaining linear logic programming
+language where logical facts can be asserted and retracted in a
+structured way. In Linear Meld, a program is seen as a database of
+logical facts and a set of derivation rules. The database of facts is
+partitioned by the nodes of a graph structure which leads to
+parallelism when nodes are executed simultaneously. Due to the
+foundations on linear logic, rules can retract facts in a declarative
+and structured fashion, leading to more expressive programs. We
+present the design and implementation of the virtual machine that we
+implemented to run Linear Meld on multicores, with particular focus on
+thread management, code organization, fact indexing, rule execution,
+and database organization for efficient fact insertion, lookup and
+deletion. Our results show that the virtual machine is
+capable of scaling programs with up to 16 threads and also exhibits
+interesting scalar performance results due to our indexing optimizations.
+\end{abstract}
 
-We have developed a virtual machine for Linear Meld, a forward-chaining linear logic programming language
-where programs can be executed in parallel. In Linear Meld, a program is seen as a database of logical facts and a set of derivation rules.
-The database of facts is partitioned by the nodes of a graph structure which leads
-to parallelism when nodes are executed simultaneously.
-Due to the foundations on linear logic, rules can retract facts in a declarative and structured fashion, leading
-to more expressive programs.
-We present the design and implementation of the virtual machine that executes on multicores,
-with a focus on thread management, code organization, fact indexing, rule execution, and database organization for efficient fact insertion,
-lookup and deletion. Our results show that the virtual machine is not only
-capable of scaling programs with up to 16 threads but also exhibits interesting performance results when
-compared against other programming languages.
+\category{D.3.4}{PROCESSORS}{Interpreters}
+\category{D.3.4}{PROCESSORS}{Run-time environments}
+\category{D.1.3}{PROGRAMMING TECHNIQUES}{Concurrent Programming}[Parallel Programming]
+
+\terms{Design, Languages, Performance}
+
+\keywords{Linear Logic, Virtual Machine, Implementation}
