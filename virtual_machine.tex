@@ -2,7 +2,7 @@
 \label{virtual_machine}
 
 We have developed a compiler that compiles LM programs to byte-code
-and a multi-threaded virtual machine (VM) using POSIX threads
+and a multithreaded virtual machine (VM) using POSIX threads
 that runs the byte-code.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,10 +57,11 @@ void thread_work_loop(thread_id tid)
          for (i = 0; i < NUM_THREADS && !node; i++)
             target = (target + 1) % NUM_THREADS
             node = steal_node_from_thread(target)
+            if (node) break
          if (!node)
             // try to terminate
             become_idle(tid)
-            if (!synchronize_termination(tid))
+            if (synchronize_termination(tid))
                return
             become_active(tid)
 \end{Verbatim}
@@ -161,8 +162,15 @@ bucket \texttt{2}. Each linear fact contains the regular list
 pointers, a \texttt{flags} field and the fact arguments. Those are all
 stored continuously to improve data locality. One use of
 the \texttt{flags} field is to mark that a fact is already being
-used. For example, consider the rule \texttt{a(A,B), a(C,D) -o
-...}. When we first pick a fact for \texttt{a(A, B)} from the hash
+used. For example, consider the rule:
+
+{\footnotesize
+\begin{Verbatim}
+a(A,B), a(C,D) -o ...
+\end{Verbatim}
+}
+
+When we first pick a fact for \texttt{a(A, B)} from the hash
 table, we mark it as being used in order to ensure that, when we
 retrieve facts for \texttt{a(C, D)}, the first one cannot be used
 twice since that would violate linearity.
@@ -190,20 +198,18 @@ fired; \texttt{Dropped Bitmap} contains the rules that must be dropped
 from \texttt{Rule Queue} and \texttt{Active Bitmap} if the rule being
 executed succeeds; and \texttt{Predicates Count} counts the number of
 facts per predicate. To understand how our engine works, consider the
-following set of rules and facts:
+following set of facts and rules:
 
 {\footnotesize
 \begin{Verbatim}
-// rules
-1: a, e(1) -o b.
-2: a -o c.
-3: b -o d.
-4: e(0) -o f.
-5: c -o e(1).
-
-// facts
 a.
 e(0).
+
+a, e(1) -o b.  // rule 1
+a -o c.        // rule 2
+b -o d.        // rule 3
+e(0) -o f.     // rule 4
+c -o e(1).     // rule 5
 \end{Verbatim}
 }
 
@@ -287,13 +293,13 @@ where \texttt{2} comes from register 0.
 \begin{Verbatim}
 PERSISTENT ITERATE a MATCHING TO reg 0
    LINEAR ITERATE b MATCHING TO reg 1
-      (match).0=0.0             // match argument X
+      (match).0=0.0                  // match argument X
       LINEAR ITERATE c MATCHING TO reg 2
-         (match).0=0.0          // match argument X
-         (match).1=0.1          // match argument Y
+         (match).0=0.0               // match argument X
+         (match).1=0.1               // match argument Y
          ALLOC d TO reg 3
-         MVFIELDFIELD 0.1 TO 3.0  // get argument Y
-         ADDLINEAR reg 3             // derive d(Y)
+         MVFIELDFIELD 0.1 TO 3.0       // get argument Y
+         ADDLINEAR reg 3                  // derive d(Y)
          REMOVE reg 2
          REMOVE reg 1
          TRY NEXT
@@ -333,12 +339,12 @@ new \texttt{a(N+1)} fact.
 {\footnotesize
 \begin{Verbatim}
 LINEAR ITERATE a MATCHING TO reg 0
-  MVFIELDREG 0.0 TO reg 1       // initial argument
-  MVINTREG INT 1 TO reg 2
-  reg 1 INT PLUS reg 2 TO reg 3
-  MVREGFIELD reg 3 TO 0.0  // reuse/update argument
-  UPDATE reg 0
-  TRY NEXT
+   MVFIELDREG 0.0 TO reg 1           // initial argument
+   MVINTREG INT 1 TO reg 2
+   reg 1 INT PLUS reg 2 TO reg 3
+   MVREGFIELD reg 3 TO 0.0      // reuse/update argument
+   UPDATE reg 0
+   TRY NEXT
 RETURN
 \end{Verbatim}
 }
@@ -382,7 +388,8 @@ Entropy(A, F) = - \sum_{v \in values(F, A)} \frac{count(F, A = v)}{total(F)} \lo
 \]
 }
 
-Where $A$ is the target argument, $F$ is the set of linear facts
+\noindent
+where $A$ is the target argument, $F$ is the set of linear facts
 for the target predicate, $values(F, A)$ is set of values of the
 argument $A$, $count(F, A = v)$ counts the number of linear facts
 where argument $A$ is equal to $v$ and $total(F)$ counts the number of
@@ -423,7 +430,7 @@ a \emph{cons cell} with 3 fields: \texttt{tail}, the pointer to the
 next element of the list; \texttt{head}, the element stored by this
 element of the list; and \texttt{refs} that counts the number of
 pointers to this list element in the VM. The list is deleted from the
-heap whenever \texttt{refs} is decremented to 0.
+heap whenever \texttt{refs} is decremented to zero.
 
 We avoid garbage collection schemes since objects are created and discarded
 in very specific points of the virtual machine and our objects cannot contain circular references.

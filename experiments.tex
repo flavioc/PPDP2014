@@ -102,7 +102,7 @@ implementation in Python.
 \hspace{0.5cm}
 \subfigure[GGC using a random graph with 2,000 nodes and 600,000 edges]
    {\label{exp:ggc}\includegraphics[width=\plotsize]{figures/results-ggc.pdf}}
-\caption{Experimental results for the GGC and PageRank algorithms}
+\caption{Experimental results for the PageRank and GGC  algorithms}
 \end{figure*}
 
 \begin{figure*}[ht]
@@ -120,7 +120,7 @@ implementation in Python.
 \subfigure[N-Queens program (13x13~board)]
    {\label{exp:13queens}\includegraphics[width=\plotsize]{figures/results-13queens.pdf}}
 \hspace{0.5cm}
-\subfigure[BP (400x400~image)]
+\subfigure[Belief Propagation (400x400~image)]
    {\label{exp:bp}\includegraphics[width=\plotsize]{figures/results-bp.pdf}}
 \caption{Experimental results for the N-Queens and Belief Propagation programs}
 \end{figure*}
@@ -203,9 +203,9 @@ results prove this assertion.
 
 \subsection{Memory Statistics}
 
-In this section, we present the amount of \textbf{Memory} used by the VM after the
+In this section, we present the amount of memory used by the VM after the
 programs presented in the previous section complete. We also count the number of
-\textbf{Facts} stored in the database. This serves as an indication of
+facts stored in the database. This serves as an indication of
 how much memory is needed in terms of the number of facts stored in the database.
 Results are shown in Table~\ref{tbl:memory}.
 
@@ -221,7 +221,7 @@ MiniMax & 3 & 886,443 KB & 295,481 KB \\
 N-Queens & 74,557 & 55,408 KB & 760 bytes \\
 BP & 2,235,200 & 617,417 KB & 283 bytes \\
 \hline\hline
-\multicolumn{3}{l}{Average (W/ MiniMax) } & 288 bytes \\
+\multicolumn{3}{l}{Average (without MiniMax) } & 288 bytes \\
 \end{tabular}}
 \caption{Memory usage of programs after completion using 1 thread.}
 \label{tbl:memory}
@@ -239,5 +239,5 @@ PageRank, GGC and SD show a low memory usage per fact. This makes sense since th
 used in those programs are relatively simple with only a few arguments.
 This changes with the N-Queens problem where the predicates have lists representing the valid
 positions of the queens in the board. Storing lists is far more expensive than storing integral
-values such as integers or floating point numbers. The same thing happens with BP because
+values such as integers or floating point numbers. The same happens with BP because
 the belief values are stored as lists of floating point numbers.

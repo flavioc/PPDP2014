@@ -1,4 +1,4 @@
-\documentclass{acm_proc_article-sp}
+\documentclass{sigplanconf}
 \usepackage[utf8]{inputenc}
 \usepackage{epsfig}
 \usepackage{multicol}
@@ -17,30 +17,38 @@
 
 \begin{document}
 
-\toappear{Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from Permissions@acm.org. 
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
 
-PPDP '14, September 08 - 10 2014, Canterbury, United Kingdom
-Copyright 2014 ACM 978-1-4503-2947-7/14/09\$15.00.
-http://dx.doi.org/10.1145/2643135.2643150 }
+\conferenceinfo{PPDP '14}{September 08--10, 2014, Canterbury, United Kingdom}
+\copyrightyear{2014} 
+\copyrightdata{978-1-nnnn-nnnn-n/yy/mm} 
+\doi{nnnnnnn.nnnnnnn}
+
+% Uncomment one of the following two, if you are not going for the 
+% traditional copyright transfer agreement.
+\exclusivelicense                % ACM gets exclusive license to publish, 
+                                  % you retain copyright
+%\permissiontopublish             % ACM gets nonexclusive license to publish
+                                  % (paid open-access papers, 
+                                  % short abstracts)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \title{Design and Implementation of a Multithreaded Virtual Machine for Executing Linear Logic Programs}
 
-\numberofauthors{3}
-\author{
-  \alignauthor Flavio Cruz \\
-    \affaddr{Carnegie Mellon University}
-    \affaddr{Pittsburgh, PA 15213, USA}\\
-    \email{fmfernan@cs.cmu.edu} \\
-  \alignauthor Ricardo Rocha \\
-    \affaddr{CRACS \& INESC TEC}\\
-    \affaddr{University of Porto}\\
-    \affaddr{Rua Campo Alegre 1021/1055}\\
-    \affaddr{4169-007 Porto, Portugal}\\
-    \email{ricroc@dcc.fc.up.pt}
-  \alignauthor Seth Copen Goldstein \\
-    \affaddr{Carnegie Mellon University}
-    \affaddr{Pittsburgh, PA 15213, USA}\\
-    \email{seth@cs.cmu.edu} \\
-}
+\authorinfo{Flavio Cruz}
+           {Carnegie Mellon University\\Pittsburgh, PA 15213, USA}
+           {fmfernan@cs.cmu.edu}
+
+\authorinfo{Ricardo Rocha}
+           {CRACS \& INESC TEC\\University of Porto\\Rua Campo Alegre 1021/1055\\4169-007 Porto, Portugal}
+           {ricroc@dcc.fc.up.pt}
+
+\authorinfo{Seth Copen Goldstein}
+           {Carnegie Mellon University\\Pittsburgh, PA 15213, USA}
+           {seth@cs.cmu.edu}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,11 +61,266 @@ http://dx.doi.org/10.1145/2643135.2643150 }
 \input{experiments}
 \input{related_work}
 \input{conclusions}
+\input{ack}
 
 \balance
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibliographystyle{abbrv}
-\bibliography{refs}
+\bibliographystyle{abbrvnat}
+
+% The bibliography should be embedded for final submission.
+%\bibliography{refs}
+
+\begin{thebibliography}{35}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ali and Karlsson(1990)]{Ali:1990fk}
+K.~Ali and R.~Karlsson.
+\newblock Full prolog and scheduling or-parallelism in muse.
+\newblock \emph{International Journal of Parallel Programming}, 19\penalty0
+  (6):\penalty0 445--475, 1990.
+\newblock ISSN 0885-7458.
+\newblock \doi{10.1007/BF01397627}.
+\newblock URL \url{http://dx.doi.org/10.1007/BF01397627}.
+
+\bibitem[Ali(1988)]{Ali88}
+K.~A.~M. Ali.
+\newblock Or-parallel execution of prolog on bc-machine.
+\newblock In R.~A. Kowalski and K.~A. Bowen, editors, \emph{ICLP/SLP}, pages
+  1531--1545. MIT Press, 1988.
+\newblock ISBN 0-262-61056-6.
+\newblock URL \url{http://dblp.uni-trier.de/db/conf/iclp/iclp88.html#Ali88}.
+
+\bibitem[Ashley-Rollman et~al.(2007)Ashley-Rollman, Rosa, Srinivasa, Pillai,
+  Goldstein, and Campbell]{ashley-rollman-derosa-iros07wksp}
+M.~P. Ashley-Rollman, M.~D. Rosa, S.~S. Srinivasa, P.~Pillai, S.~C. Goldstein,
+  and J.~D. Campbell.
+\newblock Declarative programming for modular robots.
+\newblock In \emph{Workshop on Self-Reconfigurable Robots/Systems and
+  Applications at IROS 2007}, 2007.
+
+\bibitem[Ashley-Rollman et~al.(2009)Ashley-Rollman, Lee, Goldstein, Pillai, and
+  Campbell]{ashley-rollman-iclp09}
+M.~P. Ashley-Rollman, P.~Lee, S.~C. Goldstein, P.~Pillai, and J.~D. Campbell.
+\newblock A language for large ensembles of independently executing nodes.
+\newblock In \emph{International Conference on Logic Programming (ICLP)}, 2009.
+
+\bibitem[Baelde(2012)]{Baelde:2012:LGF:2071368.2071370}
+D.~Baelde.
+\newblock Least and greatest fixed points in linear logic.
+\newblock \emph{ACM Transactions on Computational Logic}, 13\penalty0
+  (1):\penalty0 1--44, 2012.
+
+\bibitem[Betz and Fr{\"u}hwirth(2005)]{Betz:2005kx}
+H.~Betz and T.~Fr{\"u}hwirth.
+\newblock A linear-logic semantics for constraint handling rules.
+\newblock In \emph{Principles and Practice of Constraint Programming - CP
+  2005}, volume 3709 of \emph{Lecture Notes in Computer Science}, pages
+  137--151. 2005.
+
+\bibitem[Butler et~al.(1988)Butler, Disz, Lusk, Olson, Overbeek, and
+  Stevens]{ButlerDLOOS88}
+R.~Butler, T.~Disz, E.~L. Lusk, R.~Olson, R.~A. Overbeek, and R.~L. Stevens.
+\newblock Scheduling or-parallelism: An argonne perspective.
+\newblock In R.~A. Kowalski and K.~A. Bowen, editors, \emph{ICLP/SLP}, pages
+  1590--1605. MIT Press, 1988.
+\newblock ISBN 0-262-61056-6.
+\newblock URL
+  \url{http://dblp.uni-trier.de/db/conf/iclp/iclp88.html#ButlerDLOOS88}.
+
+\bibitem[Colmerauer and Roussel(1993)]{Colmerauer:1993:BP:154766.155362}
+A.~Colmerauer and P.~Roussel.
+\newblock The birth of prolog.
+\newblock In \emph{The Second ACM SIGPLAN Conference on History of Programming
+  Languages}, pages 37--52, New York, NY, USA, 1993.
+
+\bibitem[Costa et~al.(2011)Costa, Damas, and
+  Rocha]{DBLP:journals/corr/abs-1102-3896}
+V.~S. Costa, L.~Damas, and R.~Rocha.
+\newblock The yap prolog system.
+\newblock \emph{CoRR}, abs/1102.3896, 2011.
+
+\bibitem[Cruz et~al.(2014)Cruz, Rocha, Goldstein, and Pfenning]{cruz-iclp14}
+F.~Cruz, R.~Rocha, S.~Goldstein, and F.~Pfenning.
+\newblock {A Linear Logic Programming Language for Concurrent Programming over
+  Graph Structures}.
+\newblock \emph{Journal of Theory and Practice of Logic Programming, 30th
+  International Conference on Logic Programming (ICLP 2014), Special Issue},
+  14\penalty0 (4 \& 5):\penalty0 493--507, July 2014.
+
+\bibitem[Culler et~al.(1993)Culler, Goldstein, Schauser, and von
+  Eicken]{CullerGSvE93}
+D.~E. Culler, S.~C. Goldstein, K.~E. Schauser, and T.~von Eicken.
+\newblock {TAM --- a compiler controlled threaded abstract machine}.
+\newblock \emph{Journal of Parallel and Distributed Computing}, 18:\penalty0
+  347--370, July 1993.
+\newblock URL \url{http://www.cs.cmu.edu/~seth/papers/CullerGSvE93.pdf}.
+
+\bibitem[Girard(1987)]{girard-87}
+J.-Y. Girard.
+\newblock Linear logic.
+\newblock \emph{Theoretical Computer Science}, 50\penalty0 (1):\penalty0
+  1--102, 1987.
+
+\bibitem[Goldstein(1994)]{goldstein-tr94}
+S.~C. Goldstein.
+\newblock The implementation of a threaded abstract machine.
+\newblock Technical Report UCB/CSD-94-818, EECS Department, University of
+  California, Berkeley, 1994.
+\newblock URL \url{http://www.cs.cmu.edu/~seth/papers/goldstein-tr94.pdf}.
+
+\bibitem[Gonzalez et~al.(2009)Gonzalez, Low, and
+  Guestrin]{Gonzalez+al:aistats09paraml}
+J.~Gonzalez, Y.~Low, and C.~Guestrin.
+\newblock Residual splash for optimally parallelizing belief propagation.
+\newblock In \emph{Artificial Intelligence and Statistics (AISTATS)}, 2009.
+
+\bibitem[Gupta et~al.(2001)Gupta, Pontelli, Ali, Carlsson, and
+  Hermenegildo]{Gupta:2001:PEP:504083.504085}
+G.~Gupta, E.~Pontelli, K.~A.~M. Ali, M.~Carlsson, and M.~V. Hermenegildo.
+\newblock Parallel execution of prolog programs: {A} survey.
+\newblock \emph{ACM Transactions on Programming Languages and Systems
+  (TOPLAS)}, 23\penalty0 (4):\penalty0 472--602, 2001.
+
+\bibitem[Hermenegildo(1986)]{Hermenegildo:1986:AMB:913061}
+M.~V. Hermenegildo.
+\newblock \emph{An Abstract Machine Based Execution Model for Computer
+  Architecture Design and Efficient Implementation of Logic Programs in
+  Parallel}.
+\newblock PhD thesis, 1986.
+\newblock AAI8700203.
+
+\bibitem[Hodas and Miller(1994)]{Hodas94logicprogramming}
+J.~S. Hodas and D.~Miller.
+\newblock Logic programming in a fragment of intuitionistic linear logic.
+\newblock \emph{Information and Computation}, 110:\penalty0 32--42, 1994.
+
+\bibitem[Holzbaur et~al.(2004)Holzbaur, de~la Banda, Stuckey, and
+  Duck]{DBLP:journals/corr/cs-PL-0408025}
+C.~Holzbaur, M.~J.~G. de~la Banda, P.~J. Stuckey, and G.~J. Duck.
+\newblock Optimizing compilation of constraint handling rules in hal.
+\newblock \emph{CoRR}, cs.PL/0408025, 2004.
+
+\bibitem[Isard et~al.(2007)Isard, Budiu, Yu, Birrell, and
+  Fetterly]{Isard:2007:DDD:1272996.1273005}
+M.~Isard, M.~Budiu, Y.~Yu, A.~Birrell, and D.~Fetterly.
+\newblock Dryad: distributed data-parallel programs from sequential building
+  blocks.
+\newblock In \emph{European Conference on Computer Systems (EuroSys)}, pages
+  59--72, 2007.
+
+\bibitem[Kacsuk(1990)]{Kacsuk:1990:EMP:533578}
+P.~Kacsuk.
+\newblock \emph{Execution Models of PROLOG for Parallel Computers}.
+\newblock MIT Press, Cambridge, MA, USA, 1990.
+\newblock ISBN 0262111497.
+
+\bibitem[Kara et~al.(1997)Kara, Davy, Goodeve, and Nash]{Kara:1997:AMM:265274}
+M.~Kara, J.~R. Davy, D.~Goodeve, and J.~Nash, editors.
+\newblock \emph{Abstract Machine Models for Parallel and Distributed
+  Computing}.
+\newblock IOS Press, Amsterdam, The Netherlands, The Netherlands, 1997.
+\newblock ISBN 90-5199-267-X.
+
+\bibitem[Lam and Sulzmann(2010)]{DBLP:journals/corr/abs-1006-3039}
+E.~S.~L. Lam and M.~Sulzmann.
+\newblock Concurrent goal-based execution of constraint handling rules.
+\newblock \emph{CoRR}, abs/1006.3039, 2010.
+
+\bibitem[Lin and Kumar(1988)]{Lin:1988:AEL:900478}
+Y.~Lin and V.~Kumar.
+\newblock And-parallel execution of logic programs on a shared memory
+  multiprocessor:a summary of results.
+\newblock Technical report, Austin, TX, USA, 1988.
+
+\bibitem[Liu(1998)]{Liu98extendingdatalog}
+M.~Liu.
+\newblock Extending datalog with declarative updates.
+\newblock In \emph{International Conference on Database and Expert System
+  Applications (DEXA)}, volume 1873, pages 752--763, 1998.
+
+\bibitem[Loo et~al.(2006)Loo, Condie, Garofalakis, Gay, and
+  Hellerstein]{Loo-condie-garofalakis-p2}
+B.~T. Loo, T.~Condie, M.~Garofalakis, D.~E. Gay, and J.~M. Hellerstein.
+\newblock Declarative networking: Language, execution and optimization.
+\newblock In \emph{International Conference on Management of Data (SIGMOD)},
+  pages 97--108, 2006.
+
+\bibitem[L\'{o}pez et~al.(2005)L\'{o}pez, Pfenning, Polakow, and
+  Watkins]{Lopez:2005:MCL:1069774.1069778}
+P.~L\'{o}pez, F.~Pfenning, J.~Polakow, and K.~Watkins.
+\newblock Monadic concurrent linear logic programming.
+\newblock In \emph{Proceedings of the 7th ACM SIGPLAN International Conference
+  on Principles and Practice of Declarative Programming}, PPDP '05, pages
+  35--46, New York, NY, USA, 2005.
+
+\bibitem[Low et~al.(2010)Low, Gonzalez, Kyrola, Bickson, Guestrin, and
+  Hellerstein]{GraphLab2010}
+Y.~Low, J.~Gonzalez, A.~Kyrola, D.~Bickson, C.~Guestrin, and J.~M. Hellerstein.
+\newblock Graphlab: {A} new framework for parallel machine learning.
+\newblock In \emph{Conference on Uncertainty in Artificial Intelligence (UAI)},
+  pages 340--349, 2010.
+
+\bibitem[Malewicz et~al.(2010)Malewicz, Austern, Bik, Dehnert, Horn, Leiser,
+  and Czajkowski]{Malewicz:2010:PSL:1807167.1807184}
+G.~Malewicz, M.~H. Austern, A.~J.~C. Bik, J.~C. Dehnert, I.~Horn, N.~Leiser,
+  and G.~Czajkowski.
+\newblock Pregel: a system for large-scale graph processing.
+\newblock In \emph{International Conference on Management of Data (SIGMOD)},
+  pages 135--146, 2010.
+
+\bibitem[Miller(1985)]{Miller85anoverview}
+D.~Miller.
+\newblock An overview of linear logic programming.
+\newblock In \emph{in Computational Logic}, pages 1--5, 1985.
+
+\bibitem[Ramakrishnan and Ullman(1993)]{Ramakrishnan93asurvey}
+R.~Ramakrishnan and J.~D. Ullman.
+\newblock A survey of research on deductive database systems.
+\newblock \emph{Journal of Logic Programming}, 23:\penalty0 125--149, 1993.
+
+\bibitem[Sunderam(1990)]{Sunderam90pvm:a}
+V.~S. Sunderam.
+\newblock Pvm: A framework for parallel distributed computing.
+\newblock \emph{Concurrency: Practice and Experience}, 2:\penalty0 315--339,
+  1990.
+
+\bibitem[{van Rossum}(1995)]{vanRossum:1995:PRM}
+G.~{van Rossum}.
+\newblock {Python} reference manual.
+\newblock Report CS-R9525, Centrum voor Wiskunde en Informatica, Amsterdam, the
+  Netherlands, Apr. 1995.
+\newblock URL \url{http://www.python.org/doc/ref/ref-1.html}.
+
+\bibitem[Warren(1983)]{AICPub641:1983}
+D.~H.~D. Warren.
+\newblock An abstract prolog instruction set.
+\newblock Technical Report 309, AI Center, SRI International, 333 Ravenswood
+  Ave., Menlo Park, CA 94025, Oct 1983.
+
+\bibitem[Warren(1987)]{Warren:1987:OEM:67683.67699}
+D.~H.~D. Warren.
+\newblock Or-parallel execution models of prolog.
+\newblock In \emph{II and Colloquium on Functional and Logic Programming and
+  Specifications (CFLP) on TAPSOFT '87: Advanced Seminar on Foundations of
+  Innovative Software Development}, pages 243--259, New York, NY, USA, 1987.
+  Springer-Verlag New York, Inc.
+\newblock ISBN 0-387-17611-X.
+\newblock URL \url{http://dl.acm.org/citation.cfm?id=67683.67699}.
+
+\bibitem[Watkins et~al.(2004)Watkins, Cervesato, Pfenning, and
+  Walker]{Watkins:2004uq}
+K.~Watkins, I.~Cervesato, F.~Pfenning, and D.~Walker.
+\newblock A concurrent logical framework: The propositional fragment.
+\newblock In \emph{Types for Proofs and Programs}, volume 3085 of \emph{Lecture
+  Notes in Computer Science}, pages 355--377. 2004.
+\newblock \doi{10.1007/978-3-540-24849-1_23}.
+
+\end{thebibliography}
+
 \end{document}
