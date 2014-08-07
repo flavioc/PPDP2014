@@ -1,0 +1,161 @@
+----------------------- REVIEW 1 ---------------------
+
+In the related work, several logic programming languages are cited, none of which seem to exhibit (non-extra-logical) linear behaviour. While not as advanced and graph-specific as LM, it is my belief that languages like Lolli and Forum would also be a good inspiration, despite the difference of objectives.
+-> Added some text about these languages in the related work section.
+
+The ideas brought forth in this paper could be used for other linear logic programming languages and/or theorem provers. To what extent can the LM virtual machine serve as a back-end to other compilers of such languages? (I am particularly interested in the indexing algorithm)
+-> The indexing algorithm could be applied in any forward-chaining logic programming language.
+
+The comparing operators are not said to be part of the language, they may need to be added. Maybe to the operations of Table -1- (see example on page 3)
+-> Comparing operators are called "constraint"s (in the table). We did not include the operators themselves for simplicity.
+
+In the test section, the authors first compared single-threaded LM programs to sequential programs in single-threaded C and Python as well as a Prolog implementation. Then they used multi-threads in LM to "beat" C. It is unclear whether the second comparison was to single-threaded or multi-threaded C. I am curious to know the results of comparison between multi-threaded LM and multi-threaded C implementations. Also, It would be interesting to see comparison with a Datalog implementation since it is forward-chaining and thus closer to LM than the backward-chaining Prolog, it would serve to show just which improvements are due to the different features of the VM and which are due to the chaining discipline.
+-> In 4.1 we compare a single-threaded LM program against single-threaded programs in other languages. In 4.2 we compare LM against LM and not against other programs.
+
+----------------------- REVIEW 2 ---------------------
+
+1. LM nodes
+From the paper, it is not very clear how dynamically adding/removing nodes are supported in LM. If the node number in the problem is unknown or can be changed dynamically, how to partition N to T subgraphs?
+
+"closer nodes are clustered together" -- not clear what's the definition of "closer".
+-> If a node is dynamically created, it will be added to the partition of the current thread. However, it may be stolen aftwards. Changed the text to make it clear.
+
+2. Work stealing
+The working stealing algorithm in Sections 3.1 and 3.2 reads not very elegant. A more through-out example would be needed here to explain the details on when and how to steal.
+"the facts stored in Fact Buffer will then be processed whenever the corresponding node is about to be executed" -- what is exactly "about to be executed"? should it be "when the flag becomes active"?
+
+"the sending thread needs to activate the node by pushing it to the Work Queue of the target thread" -- then the Work Queue should be synchronized, isn't it very expensive, since the Work Queue would be accessed frequently?
+
+-> TODO
+
+3. Indexing
+The entropy function looks interesting. The definition of F is not very clear. What is the multi-set of linear facts? An example would be needed here.
+-> Reworded the text.
+
+4. Performance
+The experiments were conducted on 32 core machine, but the paper only reported the results up-to 16 threads. Does that mean the VM degrades seriously with 32 threads?
+-> It degrades slighly. We think that the issue is due to the amount of data used since the current compiler has problems handling very large problems.
+
+Table 3, for size 10, it is unclear why the C program (0.67) is slower then LM. Please clarify.
+-> The execution is too small, therefore we removed it.
+
+Garbage collection: it looks like currently the VM does not have garbage collection, but GC seems to be an obvious task to add in this project.
+-> Added a paragraph on this on 3.7.
+
+----------------------- REVIEW 3 ---------------------
+
+I was expecting to see a discussion of related work on linear logic
+programming, in particular to the following systems:
+
+1. Forum
+2. Lolli (and its monadic extension, Lollimon)
+3. Lygon
+4. MSR
+
+The first two are by Dale Miller, Lollimon is by Frank Pfenning and
+others, Lygon by James Harland and David Pym, and MSR by Iliano
+Cervesato. (Search for the precise citations on Google Scholar.)
+
+-> Added some discussion in section 5.
+
+The syntax (section 2.2) doesn't give the grammar for terms ("t").
+-> Added (TODO).
+
+Regarding concurrency, it is not clear to me how important a SMP
+architecture is for your system, since you do divide the database up
+into a tree-like structure and distribute it among the threads.
+-> It's not required since the language can also implemented in distributed architectures.
+
+The division of the program into nodes needs to be explained better.
+The brief description of it in section 3.1 left me utterly puzzled.
+What exactly is meant by "... we take note of predicates that are used
+in rules with communication [...], and then build a graph of nodes
+from the program's axioms"?
+-> Reworded.
+
+For inter-thread synchronization, it seems to me that the rule engine
+can block on communications with other threads when sending new facts
+owned elsewhere. Is this the case? Are inter-thread communications
+also treated concurrently?
+-> Yes, there is synchronization because several threads may manipulate the same queue.
+
+Regarding the implementation of the VM, this is not explicitly
+mentioned in the paper: is it written in C++?
+-> Yes
+
+The two surprising things in your experimental results are the
+extraordinary performance of belief propagation (fig. 9, (f)) and your
+memory costs for MiniMax. The latter you already explain, but the
+former deserves a bit more explanation. Is it the case that algorithms
+like BP are the "sweet spot" for bottom-up linear logic programming?
+Are there any other examples of such algorithms?
+-> Yes, it is a sweet spot. There are many other algorithms in the field of machine learning
+that display such behaviour.
+
+It seems to me that WI and WN perform pretty much the same, especially
+in cases where W* and N* classes are markedly different. Would it be
+fair to say that work-stealing is a much more impactful "optimization"
+than indexing?
+-> Indexing impacts sequential execution (and reduces scalability). Work stealing impacts parallel execution (more scalability).
+
+----------------------- REVIEW 4 ---------------------
+
+"The dynamic (or operational) semantics of LM is identical to Datalog"
+==>
+
+  This sentence does not seem true in the presence of linear
+  facts. Isn't it? (otherwise, it would be nice to compare with some
+      Datalog dialect that handles updates)
+
+-> The semantics are similar because they both use forward-chaining. Of course, the similiarities end here.
+
+"Recursive types ... are also allowed" ==>
+
+Is any special care taken to prevent or detect non-terminating
+programs? A nice property of some Datalog dialects (and query
+    languages like SQL) is the characterization of safe rules that
+always terminates.
+-> No.
+
+
+comprehension / aggregates ==>
+
+  Are those constructs extra-logical or expressible in the linear
+    logic programming language?
+-> Expressible in linear logic.
+
+"[sum => P | . | price(A, P) | 1 | total(A, P)]" ==>
+
+  I think that "." and "1" are not explained anywhere.
+-> Fixed.
+
+"reduction of inter-thread communication" ==>
+  Is that updating some shared data structures or sending messages?
+-> In this context, it's reducing messages exchange between nodes in different threads (thus less use of shared data structures).
+
+I would add numbers or labels to each rule in the example (1,2,3,4,5).
+
+"We use 32 bits integers" ==>
+  Is the number of rules limited to 32? If true, how does raising this
+    number (64 bits or sparse bit vectors) hinders performance?
+-> Not limited. It's possible to raise to 64 bits and the performance remains the same.
+
+"32 + 2P bytes" ==> Where does "32 bytes" comes from? (it is four
+  32-bit words)
+-> 32 bytes refer to the size of all the bitmaps, but we removed it since it was not very clear.
+
+"reference counting" ==>
+
+  Is there any practical reason to avoid garbage collection here?
+-> Discussed in section 3.7.
+
+"virtual machine can be easily extended to execute over computer
+networks" ==>
+
+  Any idea on the possible impact of increased communication cost?
+-> Not yet.
+
+Some aspects of the language seem to be ad-hoc and then, the connection with (linear) logic is fuzzy. For instance, "comprehension" looks like a realization of an universally quantified implication of the shape
+forall x. (p(x) -> !forall y. (q(x,y) -> r(x,y))
+The problem is to control that only one copy of r(x,y) is produced. Moreover, such translation will add r(x,y) for all the atoms q(x,y) added to the database, even after the application of the rule. Something similar occurs with the aggregate operator. The result may not be deterministic if only the currently available atoms are consumed *now* and any atom added *later* is not considered. Again, this does not seem to have a logical meaning since one cannot know a-priori how many tokens of information will be available.
+-> Added a note about our ICLP paper.
