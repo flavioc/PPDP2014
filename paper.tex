@@ -399,6 +399,9 @@ Operations       & $A$ & $::=$ & $\mathtt{min} \; | \; \mathtt{max} \; | \; \mat
 Sub-Head         & $SH$ & $::=$ & $L \; | \; P \; | \; SH, SH \; | \; 1$\\
 Linear Facts     & $\Delta$ & $::=$ & $\cdot \; | \; \Delta, l(\hat{t})$ \\
 Persistent Facts & $\Gamma$ & $::=$ & $\cdot \; | \; \Gamma, \bang p(\hat{t})$ \\
+Terms            & $t$ & $::=$ & $\m{node}(n) \; | \; \m{int}(n) \; | \; \m{float}(f) \; | $\\
+                 &     &       & $ \m{string}(s) \; | \; \m{bool}(b) \; | \; l \; | \; \m{pair}(t,t)$ \\
+Lists            & $l$ & $::=$ & $\m{nil} \; | \; [ t \; | \; l ]$\\
 \end{tabular}
 }
 \caption{Abstract syntax of LM}
@@ -520,14 +523,30 @@ that changes the nodes of addresses to the domain $[0, n[$, where $n$
 is the number of nodes. Once the VM starts, we simply partition the
 range $[0, n[$ into $T$ subgraphs.
 
+Figure~\ref{fig:overview} presents the layout of our virtual machine
+for a program with six nodes and two running threads. Each thread
+space includes the nodes owned by the thread (the dotted arrows
+represent the edges between nodes) and a \emph{Work Queue}, a single
+linked list containing \emph{active nodes}, i.e., nodes that have new
+facts to process. Initially, the \emph{Work Queue} is filled with all
+the nodes of the thread in order to derive the axioms.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/overview.pdf}
+\caption{Layout of the virtual machine}
+\label{fig:overview}
+\end{figure*}
+
 During execution, threads can steal nodes of other threads to keep
 themselves busy. The load balancing aspect of the system is performed
 by our work scheduler that is based on a simple work stealing
 algorithm. The pseudo-code for the main thread loop is shown in
-Fig.~\ref{code:work_loop}. In each round, a thread inspects its work
-queue for active nodes with new candidate rules and, if there is any,
-procedure \texttt{process\_node()} executes it. If the work queue is
-empty, the thread attempts to steal one node from another
+Fig.~\ref{code:work_loop}. In each round, a thread inspects its \emph{Work Queue}
+for active nodes with new candidate rules and, if there is any,
+procedure \texttt{process\_node()} is called on the target node.
+Otherwise, if the \emph{Work Queue} is empty, the thread attempts to
+steal one node from another
 thread. Starting from a random thread, it cycles through all the
 threads to find one active node. Eventually, there will be no more
 work to do and the threads will go idle. There is a global atomic
@@ -550,7 +569,8 @@ void thread_work_loop(thread_id tid)
          // need to steal a node
          target = random(NUM_THREADS)
          for (i = 0; i < NUM_THREADS && !node; i++)
-            target = (target + 1)             node = steal_node_from_thread(target)
+            target = (target + 1)
+            node = steal_node_from_thread(target)
             if (node) break
          if (!node)
             // try to terminate
@@ -564,24 +584,9 @@ void thread_work_loop(thread_id tid)
 \label{code:work_loop}
 \end{figure}
 
-
 \subsection{Nodes}
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/overview.pdf}
-\caption{Layout of the virtual machine}
-\label{fig:overview}
-\end{figure*}
-
-Figure~\ref{fig:overview} presents the layout of our virtual machine
-for a program with six nodes and two running threads. Each thread
-space includes the nodes owned by the thread (the dotted arrows
-represent the edges between nodes) and a \emph{Work Queue}, a single
-linked list containing \emph{active nodes}, i.e., nodes that have new
-facts to process. Initially, the \emph{Work Queue} is filled with all
-the nodes of the thread in order to derive the
-axioms. Figure~\ref{fig:overview} also illustrates the internal
+Figure~\ref{fig:overview} also illustrates the internal
 structure layout of a node, which includes: the database of linear
 facts (\emph{Linear DB}); the database of persistent facts
 (\emph{Persistent DB}); the rule matching structures (\emph{Rule
@@ -1200,11 +1205,17 @@ based on a data-flow model.
 Several linear logic programming languages have been developed in the past~\cite{Miller85anoverview}.
 Lolli, a programming language based on a fragment of intuitionistic linear logic~\cite{Hodas94logicprogramming}, 
 proves goals by lazily managing the context of linear resources during backward-chaining proof search.
-LolliMon~\cite{Lopez:2005:MCL:1069774.1069778} is a concurrent linear logic programming language that integrates
+Forum~\cite{Miller94} is an extension of Lolli that is based on a classical proof system. While Lolli uses an intuitionistic proof system that supports only one conclusion, Forum allows multiple conclusions. Forum is therefore better adapted to represent concurrent computations than Lolli, since many multiple goals need to be proved at once.
+
+Another extension of Lolli is LolliMon~\cite{Lopez:2005:MCL:1069774.1069778}, a concurrent linear logic programming language that integrates
 both forward and backward-chaining search, where the backward-chaining phase is done sequentially but
 the forward-chaining is done concurrently inside a monad. The backward-chaining phase is suspended
 between the forward-chaining phases, where a fix-point is computed.
-LolliMon is derived from the concurrent logical framework called CLF~\cite{Watkins:2004uq}. 
+LolliMon is derived from the concurrent logical framework called CLF~\cite{Watkins:2004uq}.
+
+Lygon~\cite{Harland96} is a backward-chaining linear logic programming language that extends Prolog with linear resources. Lygon is not only able to run Prolog programs but also allows the body of clauses to be linear that can be used exactly once in each query.
+In contrast to Prolog, where there is no clause selection, Lygon needs to use heuristics to decide which clause to prove first, since that will help finding a proof and finding it efficiently. Notably, Lygon is very suitable to solve graph-based problems due to the mutable state provided by linear clauses.
+
 \makeatletter{}\section{Conclusions}
 
 We have presented a parallel virtual machine for executing
@@ -1365,6 +1376,11 @@ G.~Gupta, E.~Pontelli, K.~A.~M. Ali, M.~Carlsson, and M.~V. Hermenegildo.
 \newblock \emph{ACM Transactions on Programming Languages and Systems
   (TOPLAS)}, 23\penalty0 (4):\penalty0 472--602, 2001.
 
+\bibitem[Harland(1996)]{Harland96}
+J.~Harland, D.~Pym and M.~Winikoff
+\newblock Programming in Lygon: An Overview
+\newblock In \emph{International Conference on Algebraic Methodology and Software Technology (AMAST)}, 391-405,  1996.
+
 \bibitem[Hermenegildo(1986)]{Hermenegildo:1986:AMB:913061}
 M.~V. Hermenegildo.
 \newblock \emph{An Abstract Machine Based Execution Model for Computer
@@ -1433,8 +1449,7 @@ B.~T. Loo, T.~Condie, M.~Garofalakis, D.~E. Gay, and J.~M. Hellerstein.
   Watkins]{Lopez:2005:MCL:1069774.1069778}
 P.~L\'{o}pez, F.~Pfenning, J.~Polakow, and K.~Watkins.
 \newblock Monadic concurrent linear logic programming.
-\newblock In \emph{Proceedings of the 7th ACM SIGPLAN International Conference
-  on Principles and Practice of Declarative Programming}, PPDP '05, pages
+\newblock In \emph{International Conference on Principles and Practice of Declarative Programming}, PPDP '05, pages
   35--46, New York, NY, USA, 2005.
 
 \bibitem[Low et~al.(2010)Low, Gonzalez, Kyrola, Bickson, Guestrin, and
@@ -1456,6 +1471,11 @@ G.~Malewicz, M.~H. Austern, A.~J.~C. Bik, J.~C. Dehnert, I.~Horn, N.~Leiser,
 D.~Miller.
 \newblock An overview of linear logic programming.
 \newblock In \emph{in Computational Logic}, pages 1--5, 1985.
+
+\bibitem[Miller(1994)]{Miller94}
+D.~Miller.
+\newblock A multiple-conclusion meta logic
+\newblock In \emph{Logic in Computer Science (LICS)}, pages 272--281, 1994.
 
 \bibitem[Ramakrishnan and Ullman(1993)]{Ramakrishnan93asurvey}
 R.~Ramakrishnan and J.~D. Ullman.

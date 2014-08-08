@@ -26,7 +26,8 @@ The working stealing algorithm in Sections 3.1 and 3.2 reads not very elegant. A
 
 "the sending thread needs to activate the node by pushing it to the Work Queue of the target thread" -- then the Work Queue should be synchronized, isn't it very expensive, since the Work Queue would be accessed frequently?
 
--> TODO
+-> Reworded and moved some parts of section 3.
+-> The rule engine needs to synchronize the queue access, but since there are many queues (as many as the number of threads), the bottleneck is reduced.
 
 3. Indexing
 The entropy function looks interesting. The definition of F is not very clear. What is the multi-set of linear facts? An example would be needed here.
@@ -59,7 +60,7 @@ Cervesato. (Search for the precise citations on Google Scholar.)
 -> Added some discussion in section 5.
 
 The syntax (section 2.2) doesn't give the grammar for terms ("t").
--> Added (TODO).
+-> Added.
 
 Regarding concurrency, it is not clear to me how important a SMP
 architecture is for your system, since you do divide the database up
@@ -77,7 +78,7 @@ For inter-thread synchronization, it seems to me that the rule engine
 can block on communications with other threads when sending new facts
 owned elsewhere. Is this the case? Are inter-thread communications
 also treated concurrently?
--> Yes, there is synchronization because several threads may manipulate the same queue.
+-> Yes, there is synchronization because several threads may manipulate the same queue. The rule engine needs to synchronize the queue access, but since there are many queues (as many as the number of threads), the bottleneck is reduced.
 
 Regarding the implementation of the VM, this is not explicitly
 mentioned in the paper: is it written in C++?
