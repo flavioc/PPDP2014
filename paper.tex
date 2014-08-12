@@ -1178,7 +1178,7 @@ Virtual machines are a popular technique for implementing interpreters
 for high level programming languages.  Due to the increased
 availability of parallel machines and distributed architectures,
 several machine models have been developed with parallelism in
-mind~\cite{Kara:1997:AMM:265274}.  One example of such machine is the
+mind~\cite{Kara:1997:AMM:265274}.  One example is the
 Parallel Virtual Machine (PVM)~\cite{Sunderam90pvm:a}, which serves as
 an abstraction to program heterogeneous computers as a single
 machine. Another important machine is the Threaded Abstract Machine
@@ -1192,26 +1192,24 @@ Abstract Machine (WAM)~\cite{AICPub641:1983}.
 Prolog is naturally parallel because several clauses for the same goal
 (AND-parallelism) or all goals in a clause (OR-parallelism) can be
 tried in parallel. Different abstract machines for AND-parallelism has
-been developed on top of the
+been developed for the
 WAM~\cite{Hermenegildo:1986:AMB:913061,Lin:1988:AEL:900478}.  For
 OR-parallelism we have several models such as: the SRI
-model~\cite{Warren:1987:OEM:67683.67699}, the Argonne
-model~\cite{ButlerDLOOS88}, the MUSE model~\cite{Ali:1990fk} and the
-BC machine~\cite{Ali88}. While all those models have been developed
-using the WAM, there are also some parallel machines totally different
-from the WAM, such as the PPAM~\cite{Kacsuk:1990:EMP:533578}, which is
-based on a data-flow model.
+model~\cite{Warren:1987:OEM:67683.67699}, the MUSE model~\cite{Ali:1990fk} and the
+BC machine~\cite{Ali88}. Although these models are built on top of the WAM,
+some machines use different approaches, such as the
+PPAM~\cite{Kacsuk:1990:EMP:533578} with its
+data-flow model.
 
 Several linear logic programming languages have been developed in the past~\cite{Miller85anoverview}.
 Lolli, a programming language based on a fragment of intuitionistic linear logic~\cite{Hodas94logicprogramming}, 
 proves goals by lazily managing the context of linear resources during backward-chaining proof search.
 Forum~\cite{Miller94} is an extension of Lolli that is based on a classical proof system. While Lolli uses an intuitionistic proof system that supports only one conclusion, Forum allows multiple conclusions. Forum is therefore better adapted to represent concurrent computations than Lolli, since many multiple goals need to be proved at once.
-
 Another extension of Lolli is LolliMon~\cite{Lopez:2005:MCL:1069774.1069778}, a concurrent linear logic programming language that integrates
 both forward and backward-chaining search, where the backward-chaining phase is done sequentially but
 the forward-chaining is done concurrently inside a monad. The backward-chaining phase is suspended
 between the forward-chaining phases, where a fix-point is computed.
-LolliMon is derived from the concurrent logical framework called CLF~\cite{Watkins:2004uq}.
+LolliMon is derived from the logical framework called CLF~\cite{Watkins:2004uq}.
 
 Lygon~\cite{Harland96} is a backward-chaining linear logic programming language that extends Prolog with linear resources. Lygon is not only able to run Prolog programs but also allows the body of clauses to be linear that can be used exactly once in each query.
 In contrast to Prolog, where there is no clause selection, Lygon needs to use heuristics to decide which clause to prove first, since that will help finding a proof and finding it efficiently. Notably, Lygon is very suitable to solve graph-based problems due to the mutable state provided by linear clauses.
@@ -1245,6 +1243,9 @@ graph-based algorithms that can be more easily reasoned about, a clear advantage
 competing systems.
  
 \makeatletter{}\acks
+
+We thank the anonymous reviewers for their insightful comments and suggestions
+that helped us improve the quality of the paper.
 
 This work is partially funded by the ERDF (European Regional
 Development Fund) through the COMPETE Programme; by FCT (Portuguese
@@ -1311,16 +1312,6 @@ H.~Betz and T.~Fr{\"u}hwirth.
 \newblock In \emph{Principles and Practice of Constraint Programming - CP
   2005}, volume 3709 of \emph{Lecture Notes in Computer Science}, pages
   137--151. 2005.
-
-\bibitem[Butler et~al.(1988)Butler, Disz, Lusk, Olson, Overbeek, and
-  Stevens]{ButlerDLOOS88}
-R.~Butler, T.~Disz, E.~L. Lusk, R.~Olson, R.~A. Overbeek, and R.~L. Stevens.
-\newblock Scheduling or-parallelism: An argonne perspective.
-\newblock In R.~A. Kowalski and K.~A. Bowen, editors, \emph{ICLP/SLP}, pages
-  1590--1605. MIT Press, 1988.
-\newblock ISBN 0-262-61056-6.
-\newblock URL
-  \url{http://dblp.uni-trier.de/db/conf/iclp/iclp88.html#ButlerDLOOS88}.
 
 \bibitem[Colmerauer and Roussel(1993)]{Colmerauer:1993:BP:154766.155362}
 A.~Colmerauer and P.~Roussel.
